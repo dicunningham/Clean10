@@ -1,5 +1,6 @@
 ﻿# windows_StartClean.ps1
 
+
 ###############################
 # Run as PowerShell Admin
 ###############################
@@ -9,10 +10,15 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
         Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; 
         exit }
 
+###############################
+# Disable Cortana
+###############################
+if((Get-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name AllowCortana -ea 0).AllowCortana) {'Cortana Already Disabled'}ELSE {Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name AllowCortana -Value '0'}
+
+
 
 ###############################
 # Windows 10 Built-In App Removal
-# Be gone, heathens!
 ###############################
 
 
